@@ -1,76 +1,50 @@
 import { OrderCardUI } from '@ui';
+import { formatOrderDate } from '../utils/date';
 import type { Meta, StoryObj } from '@storybook/react';
+
+const ingredientMock = {
+  _id: '111',
+  name: 'Булка',
+  type: 'bun',
+  proteins: 12,
+  fat: 33,
+  carbohydrates: 22,
+  calories: 33,
+  price: 123,
+  image: 'https://via.placeholder.com/100',
+  image_large: 'https://via.placeholder.com/400',
+  image_mobile: 'https://via.placeholder.com/200'
+};
 
 const meta = {
   title: 'Example/OrderCard',
   component: OrderCardUI,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-  parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
-    layout: 'fullscreen'
-  }
+  parameters: { layout: 'fullscreen' }
 } satisfies Meta<typeof OrderCardUI>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DefaultOrderCard: Story = {
+export const Default: Story = {
   args: {
     orderInfo: {
-      ingredientsInfo: [
-        {
-          _id: '111',
-          name: 'Булка',
-          type: 'top',
-          proteins: 12,
-          fat: 33,
-          carbohydrates: 22,
-          calories: 33,
-          price: 123,
-          image: '',
-          image_large: '',
-          image_mobile: ''
-        }
-      ],
-      ingredientsToShow: [
-        {
-          _id: '111',
-          name: 'Булка',
-          type: 'top',
-          proteins: 12,
-          fat: 33,
-          carbohydrates: 22,
-          calories: 33,
-          price: 123,
-          image: '',
-          image_large: '',
-          image_mobile: ''
-        },
-        {
-          _id: '111',
-          name: 'Начинка',
-          type: 'top',
-          proteins: 12,
-          fat: 33,
-          carbohydrates: 22,
-          calories: 33,
-          price: 123,
-          image: '',
-          image_large: '',
-          image_mobile: ''
-        }
-      ],
+      ingredientsInfo: [ingredientMock],
+      ingredientsToShow: [ingredientMock],
+
       remains: 2,
-      total: 2,
-      date: new Date('2024-01-25'),
+      total: 246,
+
+      date: new Date('2024-01-25T10:20:00.000Z'),
+      dateText: formatOrderDate('2024-01-25T10:20:00.000Z'),
+
       _id: '32',
-      status: 'ready',
+      status: 'done',
       name: 'Начинка',
-      createdAt: '',
-      updatedAt: '',
+      createdAt: '2024-01-25T10:20:00.000Z',
+      updatedAt: '2024-01-25T10:20:00.000Z',
       number: 3,
-      ingredients: ['Булка', 'Начинка']
+      ingredients: ['111']
     },
     maxIngredients: 5,
     locationState: {

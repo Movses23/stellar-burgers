@@ -4,9 +4,10 @@ import styles from './burger-ingredient.module.css';
 
 import {
   Counter,
-  CurrencyIcon,
-  AddButton
+  CurrencyIcon
 } from '@zlden/react-developer-burger-ui-components';
+
+import { AddButton } from '@ui';
 
 import { TBurgerIngredientUIProps } from './type';
 
@@ -31,7 +32,11 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         </Link>
         <AddButton
           text='Добавить'
-          onClick={handleAdd}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleAdd();
+          }}
           extraClass={`${styles.addButton} mt-8`}
         />
       </li>
