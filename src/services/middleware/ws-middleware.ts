@@ -16,10 +16,7 @@ export type TWsActions<TMessage = unknown> = {
   wsMessage: ActionCreatorWithPayload<TMessage>;
 };
 
-/**
- * Универсальный middleware для WebSocket.
- * ВАЖНО: никаких импортов из store.ts, чтобы не словить циклы типов.
- */
+
 export const createWsMiddleware =
   <TMessage = unknown>(
     wsActions: TWsActions<TMessage>,
@@ -31,11 +28,9 @@ export const createWsMiddleware =
     return (next) => (action) => {
       const { dispatch } = store;
 
-      // CONNECT
       if (wsActions.wsConnect.match(action)) {
         const urlFromAction = action.payload;
 
-        // ✅ ВАЖНО: если уже есть активный сокет — не трогаем
         if (socket && socket.readyState === WebSocket.OPEN) {
           return next(action);
         }
@@ -64,7 +59,7 @@ export const createWsMiddleware =
         socket = new WebSocket(url);
 
         socket.onopen = () => dispatch(wsActions.wsOpen());
-        // Не бросаем исключения: ошибка сокета не должна «ронять» страницу.
+
         socket.onerror = () => dispatch(wsActions.wsError('WebSocket error'));
 
         socket.onmessage = (event) => {
@@ -82,7 +77,7 @@ export const createWsMiddleware =
         };
       }
 
-      // DISCONNECT
+
       if (wsActions.wsDisconnect.match(action)) {
         if (socket) {
           socket.close(1000, 'disconnect');

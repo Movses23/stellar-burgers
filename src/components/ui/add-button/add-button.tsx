@@ -8,8 +8,6 @@ type TAddButtonProps = {
   extraClass?: string;
 };
 
-// Локальная реализация AddButton, чтобы не зависеть от версии UI-библиотеки.
-// По стилям использует global css из @zlden/react-developer-burger-ui-components (класс common_button).
 export const AddButton: FC<TAddButtonProps> = ({
   onClick,
   text = 'Добавить',
@@ -28,7 +26,7 @@ export const AddButton: FC<TAddButtonProps> = ({
 
 AddButton.displayName = 'AddButton';
 
-// Иконка «плюс» (копия из UI-kit, чтобы не тянуть внутренние импорты пакета)
+
 const PlusIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'

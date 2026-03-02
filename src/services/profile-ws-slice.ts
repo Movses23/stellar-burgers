@@ -30,11 +30,11 @@ const profileWsSlice = createSlice({
   name: 'profileWs',
   initialState,
   reducers: {
-    // эти 2 экшена слушает middleware
+
     wsConnect: (_state, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
 
-    // статусы
+
     wsConnecting: (state) => {
       state.status = 'CONNECTING';
       state.error = null;
@@ -47,7 +47,7 @@ const profileWsSlice = createSlice({
       state.status = 'OFFLINE';
     },
 
-    // ошибки/сообщения
+
     wsError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },

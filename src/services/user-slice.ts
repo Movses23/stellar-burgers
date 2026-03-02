@@ -13,7 +13,7 @@ type TPatchUserPayload = { name: string; email: string; password?: string };
 type TUserState = {
   user: TUser | null;
 
-  // важно для ProtectedRoute: "проверка авторизации завершена"
+
   isAuthChecked: boolean;
 
   isLoading: boolean;
@@ -65,10 +65,10 @@ export const loginUser = createAsyncThunk<
   try {
     const data = await loginUserApi({ email, password });
 
-    // refreshToken -> localStorage
+
     localStorage.setItem('refreshToken', data.refreshToken);
 
-    // accessToken -> cookie
+
     setCookie('accessToken', data.accessToken);
 
     return data.user;
@@ -110,7 +110,7 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
     try {
       await logoutApi();
 
-      // чистим токены
+
       localStorage.removeItem('refreshToken');
       deleteCookie('accessToken');
     } catch (err) {
@@ -137,7 +137,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetch user
+
       .addCase(fetchUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -154,7 +154,6 @@ const userSlice = createSlice({
         state.isAuthChecked = true;
       })
 
-      // login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -171,7 +170,6 @@ const userSlice = createSlice({
         state.isAuthChecked = true;
       })
 
-      // update user
       .addCase(patchUser.pending, (state) => {
         state.updateUserRequest = true;
         state.updateUserError = null;
@@ -185,7 +183,6 @@ const userSlice = createSlice({
         state.updateUserError = action.payload ?? 'Ошибка обновления профиля';
       })
 
-      // logout
       .addCase(logoutUser.pending, (state) => {
         state.logoutRequest = true;
         state.logoutError = null;

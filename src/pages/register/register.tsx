@@ -32,11 +32,9 @@ export const Register: FC = () => {
         password
       });
 
-      // сохраняем токены так же, как в login/refresh
       localStorage.setItem('refreshToken', data.refreshToken);
       setCookie('accessToken', data.accessToken);
 
-      // редирект: туда, откуда пришли, или на главную
       navigate(from || '/', { replace: true });
     } catch (err) {
       const message =

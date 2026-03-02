@@ -55,7 +55,7 @@ const App = () => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
-  // ✅ Проверка авторизации при старте приложения
+
   useEffect(() => {
     const token = getCookie('accessToken');
     if (token) {

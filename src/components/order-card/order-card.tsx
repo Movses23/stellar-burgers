@@ -8,7 +8,7 @@ import { OrderCardProps } from './type';
 
 const maxIngredients = 6;
 
-// В макете используется московское время: GMT+3
+
 const MSK_OFFSET_MS = 3 * 60 * 60 * 1000;
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -23,18 +23,12 @@ const pluralDays = (n: number) => {
   return 'дней';
 };
 
-/**
- * Формат как в макете:
- * "Сегодня, 16:20 i-GMT+3"
- * "Вчера, 09:10 i-GMT+3"
- * "3 дня назад, 21:05 i-GMT+3"
- */
+
 const formatOrderDate = (isoDate: string) => {
   const orderMs = new Date(isoDate).getTime();
   const nowMs = Date.now();
 
-  // Сдвигаем "мир" в GMT+3 и используем UTC-геттеры,
-  // чтобы не зависеть от таймзоны пользователя
+
   const orderShift = new Date(orderMs + MSK_OFFSET_MS);
   const nowShift = new Date(nowMs + MSK_OFFSET_MS);
 
@@ -60,13 +54,13 @@ const formatOrderDate = (isoDate: string) => {
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-  // ✅ берём ингредиенты из стора
+
   const ingredients: TIngredient[] = useSelector(
     (state) => state.ingredients.items
   );
 
   const orderInfo = useMemo(() => {
-    // если ингредиенты ещё не загрузились — просто не считаем карточку
+ 
     if (!ingredients.length) return null;
 
     const ingredientsInfo = order.ingredients.reduce<TIngredient[]>(
@@ -96,7 +90,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
     };
   }, [order, ingredients]);
 
-  // ✅ пока ингредиенты не подгрузились — не рендерим карточку
+
   if (!orderInfo) return null;
 
   return (

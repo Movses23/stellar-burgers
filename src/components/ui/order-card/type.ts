@@ -15,7 +15,7 @@ type TOrderInfo = {
 
   date: Date;
 
-  // ✅ строка в формате макета: "Сегодня, 16:20 i-GMT+3"
+
   dateText: string;
 
   _id: string;

@@ -11,10 +11,10 @@ export const ProfileMenu: FC = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    // logoutUser сам вызывает logoutApi и чистит refreshToken + cookie accessToken
+
     await dispatch(logoutUser());
 
-    // после выхода — на логин
+
     navigate('/login', { replace: true });
   };
 

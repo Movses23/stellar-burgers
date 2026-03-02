@@ -1,4 +1,4 @@
-// src/pages/profile-orders/profile-orders.tsx
+
 import { ProfileOrdersUI } from '@ui-pages';
 import { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
@@ -13,7 +13,7 @@ export const ProfileOrders: FC = () => {
   const status = useSelector((state) => state.profileWs.status);
   const error = useSelector((state) => state.profileWs.error);
 
-  // защита от двойного подключения в dev (StrictMode)
+
   const didConnectRef = useRef(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export const ProfileOrders: FC = () => {
     };
   }, [dispatch]);
 
-  // можешь оставить так, либо показывать ошибку текстом
+
   if (status === 'CONNECTING' && !orders.length) return null;
   if (error && !orders.length) return null;
 

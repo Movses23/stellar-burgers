@@ -32,11 +32,10 @@ const feedWsSlice = createSlice({
   name: 'feedWs',
   initialState,
   reducers: {
-    // эти 2 экшена слушает middleware
+
     wsConnect: (_state, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
 
-    // статусы
     wsConnecting: (state) => {
       state.status = 'CONNECTING';
       state.error = null;
@@ -49,7 +48,7 @@ const feedWsSlice = createSlice({
       state.status = 'OFFLINE';
     },
 
-    // ошибки/сообщения
+
     wsError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
@@ -65,8 +64,7 @@ const feedWsSlice = createSlice({
 export const feedWsActions = feedWsSlice.actions;
 export const feedWsReducer = feedWsSlice.reducer;
 
-// Ручное обновление ленты по кнопке "Обновить":
-// повторно запрашиваем REST /orders/all и кладём в тот же стор, что и WebSocket.
+
 export const fetchFeeds = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(feedWsActions.wsConnecting());

@@ -13,15 +13,13 @@ export const Feed: FC = () => {
   const orders = useSelector((state) => state.feedWs.orders);
   const status = useSelector((state) => state.feedWs.status);
 
-  // защита от двойного подключения в dev (StrictMode)
+
   const didConnectRef = useRef(false);
 
   useEffect(() => {
     if (didConnectRef.current) return;
     didConnectRef.current = true;
 
-    // ✅ Чтобы /feed открывался даже если WebSocket временно недоступен,
-    // сначала получаем актуальные заказы по HTTP.
     dispatch(fetchFeeds());
 
     dispatch(feedWsActions.wsConnect(WS_URL));
@@ -33,11 +31,11 @@ export const Feed: FC = () => {
   }, [dispatch]);
 
   const handleGetFeeds = useCallback(() => {
-    // По ТЗ: повторно запрашиваем список заказов с сервера
+
     dispatch(fetchFeeds());
   }, [dispatch]);
 
-  // Лоадер показываем только пока идёт первое подключение и данных ещё нет.
+
   if (status === 'CONNECTING' && !orders.length) return <Preloader />;
 
   return <FeedUI orders={orders} handleGetFeeds={handleGetFeeds} />;

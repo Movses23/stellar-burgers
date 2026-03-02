@@ -19,7 +19,7 @@ export const IngredientsCategory = forwardRef<
       counters[ingredient._id] = (counters[ingredient._id] ?? 0) + 1;
     });
 
-    // булка считается дважды: верх + низ
+
     if (bun) counters[bun._id] = 2;
 
     return counters;

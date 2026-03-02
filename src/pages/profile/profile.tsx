@@ -17,7 +17,7 @@ export const Profile: FC = () => {
     password: ''
   });
 
-  // Когда user в сторе обновился — подставляем значения в форму
+
   useEffect(() => {
     if (!user) return;
 
@@ -25,7 +25,7 @@ export const Profile: FC = () => {
       ...prevState,
       name: user.name || '',
       email: user.email || '',
-      password: '' // на всякий случай сбрасываем пароль при смене user
+      password: ''
     }));
   }, [user]);
 
@@ -46,7 +46,6 @@ export const Profile: FC = () => {
       })
     );
 
-    // очищаем пароль только при успехе
     if (patchUser.fulfilled.match(action)) {
       setFormValue((prev) => ({ ...prev, password: '' }));
     }

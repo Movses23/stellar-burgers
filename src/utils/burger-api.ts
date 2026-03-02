@@ -16,7 +16,7 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
-// ✅ Нормализуем accessToken для заголовка Authorization
+
 const getAuthHeader = () => {
   const token = getCookie('accessToken');
   if (!token) return '';
@@ -39,7 +39,7 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
         return Promise.reject(refreshData);
       }
       localStorage.setItem('refreshToken', refreshData.refreshToken);
-      // accessToken может прийти как "Bearer ..."
+
       setCookie('accessToken', refreshData.accessToken);
       return refreshData;
     });
@@ -55,7 +55,7 @@ export const fetchWithRefresh = async <T>(
     if ((err as { message?: string })?.message === 'jwt expired') {
       const refreshData = await refreshToken();
 
-      // ✅ после refresh обновляем заголовок authorization корректно
+
       if (options.headers) {
         const newAccessToken = refreshData.accessToken.startsWith('Bearer ')
           ? refreshData.accessToken

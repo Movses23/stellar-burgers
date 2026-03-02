@@ -12,10 +12,10 @@ import { createWsMiddleware } from './middleware/ws-middleware';
 import { feedWsActions } from './feed-ws-slice';
 import { profileWsActions } from './profile-ws-slice';
 
-// feed (публичный) — без токена
+
 const feedWsMiddleware = createWsMiddleware(feedWsActions, false);
 
-// profile orders (приватный) — с токеном
+
 const profileWsMiddleware = createWsMiddleware(profileWsActions, true);
 
 const store = configureStore({

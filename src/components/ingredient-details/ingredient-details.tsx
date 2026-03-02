@@ -19,12 +19,12 @@ export const IngredientDetails: FC = () => {
     return ingredients.find((item) => item._id === id) ?? null;
   }, [id, ingredients]);
 
-  // Пока ингредиенты ещё не пришли — показываем лоадер
+ 
   if (!ingredients.length) {
     return <Preloader />;
   }
 
-  // Если ингредиенты уже есть, но конкретный id не найден — тоже можно крутить лоадер/ничего не показывать
+
   if (!ingredientData) {
     return <Preloader />;
   }
