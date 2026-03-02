@@ -16,7 +16,6 @@ export type TWsActions<TMessage = unknown> = {
   wsMessage: ActionCreatorWithPayload<TMessage>;
 };
 
-
 export const createWsMiddleware =
   <TMessage = unknown>(
     wsActions: TWsActions<TMessage>,
@@ -76,7 +75,6 @@ export const createWsMiddleware =
           socket = null;
         };
       }
-
 
       if (wsActions.wsDisconnect.match(action)) {
         if (socket) {

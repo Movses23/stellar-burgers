@@ -15,7 +15,6 @@ type TOrderInfo = {
 
   date: Date;
 
-
   dateText: string;
 
   _id: string;

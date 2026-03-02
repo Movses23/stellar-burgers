@@ -1,4 +1,3 @@
-
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -10,9 +9,7 @@ import { useSelector } from '../../services/store';
 import { getOrderByNumberApi } from '../../utils/burger-api';
 import { formatOrderDate } from '../../utils/date';
 
-
 type TIngredientsInfo = Record<string, TIngredient & { count: number }>;
-
 
 type TOrderInfo = TOrder & {
   ingredientsInfo: TIngredientsInfo;
@@ -27,23 +24,18 @@ export const OrderInfo: FC = () => {
 
   const orderNumber = Number(number);
 
-
   const ingredients = useSelector((state) => state.ingredients.items);
 
-
   const feedOrders = useSelector((state) => state.feedWs.orders);
-
 
   const profileOrders = useSelector((state) => state.profileWs?.orders ?? []);
 
   const isProfile = location.pathname.startsWith('/profile/orders');
 
-
   const orderFromStore = useMemo(() => {
     const source = isProfile ? profileOrders : feedOrders;
     return source.find((o) => o.number === orderNumber) ?? null;
   }, [feedOrders, profileOrders, isProfile, orderNumber]);
-
 
   const [apiOrder, setApiOrder] = useState<TOrder | null>(null);
   const [apiLoading, setApiLoading] = useState(false);
@@ -53,7 +45,6 @@ export const OrderInfo: FC = () => {
 
     const load = async () => {
       if (!orderNumber || Number.isNaN(orderNumber)) return;
-
 
       if (orderFromStore) {
         setApiOrder(null);
@@ -84,7 +75,6 @@ export const OrderInfo: FC = () => {
     if (!order) return null;
     if (!ingredients.length) return null;
 
-
     const ingredientsInfo: TIngredientsInfo = {};
     for (const id of order.ingredients) {
       const ing = ingredients.find((i) => i._id === id);
@@ -96,7 +86,6 @@ export const OrderInfo: FC = () => {
         ingredientsInfo[id].count += 1;
       }
     }
-
 
     const total = Object.values(ingredientsInfo).reduce(
       (sum, item) => sum + item.price * item.count,

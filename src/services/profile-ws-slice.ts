@@ -30,10 +30,8 @@ const profileWsSlice = createSlice({
   name: 'profileWs',
   initialState,
   reducers: {
-
     wsConnect: (_state, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
-
 
     wsConnecting: (state) => {
       state.status = 'CONNECTING';
@@ -46,7 +44,6 @@ const profileWsSlice = createSlice({
     wsClose: (state) => {
       state.status = 'OFFLINE';
     },
-
 
     wsError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;

@@ -8,7 +8,6 @@ import { OrderCardProps } from './type';
 
 const maxIngredients = 6;
 
-
 const MSK_OFFSET_MS = 3 * 60 * 60 * 1000;
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -23,11 +22,9 @@ const pluralDays = (n: number) => {
   return 'дней';
 };
 
-
 const formatOrderDate = (isoDate: string) => {
   const orderMs = new Date(isoDate).getTime();
   const nowMs = Date.now();
-
 
   const orderShift = new Date(orderMs + MSK_OFFSET_MS);
   const nowShift = new Date(nowMs + MSK_OFFSET_MS);
@@ -54,13 +51,11 @@ const formatOrderDate = (isoDate: string) => {
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-
   const ingredients: TIngredient[] = useSelector(
     (state) => state.ingredients.items
   );
 
   const orderInfo = useMemo(() => {
- 
     if (!ingredients.length) return null;
 
     const ingredientsInfo = order.ingredients.reduce<TIngredient[]>(
@@ -89,7 +84,6 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
       dateText: formatOrderDate(order.createdAt)
     };
   }, [order, ingredients]);
-
 
   if (!orderInfo) return null;
 

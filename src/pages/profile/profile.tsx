@@ -17,7 +17,6 @@ export const Profile: FC = () => {
     password: ''
   });
 
-
   useEffect(() => {
     if (!user) return;
 

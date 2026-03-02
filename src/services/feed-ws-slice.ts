@@ -32,7 +32,6 @@ const feedWsSlice = createSlice({
   name: 'feedWs',
   initialState,
   reducers: {
-
     wsConnect: (_state, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
 
@@ -48,7 +47,6 @@ const feedWsSlice = createSlice({
       state.status = 'OFFLINE';
     },
 
-
     wsError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
@@ -63,7 +61,6 @@ const feedWsSlice = createSlice({
 
 export const feedWsActions = feedWsSlice.actions;
 export const feedWsReducer = feedWsSlice.reducer;
-
 
 export const fetchFeeds = () => async (dispatch: AppDispatch) => {
   try {

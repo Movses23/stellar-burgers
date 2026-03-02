@@ -22,7 +22,6 @@ export const fetchOrderByNumber = createAsyncThunk<
   try {
     const res = await getOrderByNumberApi(number);
 
-
     const order = res?.orders?.[0];
     if (!order) return rejectWithValue('Заказ не найден');
 

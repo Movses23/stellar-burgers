@@ -55,7 +55,6 @@ const App = () => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
-
   useEffect(() => {
     const token = getCookie('accessToken');
     if (token) {

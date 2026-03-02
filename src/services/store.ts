@@ -12,9 +12,7 @@ import { createWsMiddleware } from './middleware/ws-middleware';
 import { feedWsActions } from './feed-ws-slice';
 import { profileWsActions } from './profile-ws-slice';
 
-
 const feedWsMiddleware = createWsMiddleware(feedWsActions, false);
-
 
 const profileWsMiddleware = createWsMiddleware(profileWsActions, true);
 

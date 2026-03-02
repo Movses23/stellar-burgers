@@ -16,7 +16,6 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
-
 const getAuthHeader = () => {
   const token = getCookie('accessToken');
   if (!token) return '';
@@ -54,7 +53,6 @@ export const fetchWithRefresh = async <T>(
   } catch (err) {
     if ((err as { message?: string })?.message === 'jwt expired') {
       const refreshData = await refreshToken();
-
 
       if (options.headers) {
         const newAccessToken = refreshData.accessToken.startsWith('Bearer ')

@@ -13,7 +13,6 @@ type TPatchUserPayload = { name: string; email: string; password?: string };
 type TUserState = {
   user: TUser | null;
 
-
   isAuthChecked: boolean;
 
   isLoading: boolean;
@@ -65,9 +64,7 @@ export const loginUser = createAsyncThunk<
   try {
     const data = await loginUserApi({ email, password });
 
-
     localStorage.setItem('refreshToken', data.refreshToken);
-
 
     setCookie('accessToken', data.accessToken);
 
@@ -109,7 +106,6 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
   async (_, { rejectWithValue }) => {
     try {
       await logoutApi();
-
 
       localStorage.removeItem('refreshToken');
       deleteCookie('accessToken');

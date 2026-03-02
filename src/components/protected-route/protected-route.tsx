@@ -16,19 +16,16 @@ export const ProtectedRoute: FC<TProtectedRouteProps> = ({
   const user = useSelector((state) => state.user.user);
   const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
 
-
   if (!isAuthChecked) {
     return null;
   }
 
   const isAuth = Boolean(user);
 
- 
   if (onlyUnAuth && isAuth) {
     const from = (location.state as { from?: Location } | null)?.from;
     return <Navigate to={from?.pathname || '/'} replace />;
   }
-
 
   if (!onlyUnAuth && !isAuth) {
     return <Navigate to='/login' state={{ from: location }} replace />;

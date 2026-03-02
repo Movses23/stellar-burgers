@@ -1,13 +1,11 @@
 export const formatOrderDate = (iso: string) => {
   const date = new Date(iso);
 
-
   const time = new Intl.DateTimeFormat('ru-RU', {
     timeZone: 'Europe/Moscow',
     hour: '2-digit',
     minute: '2-digit'
   }).format(date);
-
 
   const now = new Date();
   const startOfToday = new Date(

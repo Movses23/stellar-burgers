@@ -26,7 +26,6 @@ export const AddButton: FC<TAddButtonProps> = ({
 
 AddButton.displayName = 'AddButton';
 
-
 const PlusIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
