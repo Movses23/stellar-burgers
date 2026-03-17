@@ -24,49 +24,68 @@ export const createWsMiddleware =
   (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
 
+    const getAccessToken = (): string => {
+      const raw = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('accessToken='))
+        ?.split('=')[1];
+
+      if (!raw) return '';
+
+      const decoded = decodeURIComponent(raw);
+      return decoded.replace('Bearer ', '').trim();
+    };
+
+    const buildUrl = (baseUrl: string): string => {
+      if (!withAuth) return baseUrl;
+
+      const token = getAccessToken();
+      if (!token) return '';
+
+      const sep = baseUrl.includes('?') ? '&' : '?';
+      return `${baseUrl}${sep}token=${token}`;
+    };
+
     return (next) => (action) => {
       const { dispatch } = store;
 
-      if (wsActions.wsConnect.match(action)) {
-        const urlFromAction = action.payload;
+      const result = next(action);
 
-        if (socket && socket.readyState === WebSocket.OPEN) {
-          return next(action);
+      if (wsActions.wsConnect.match(action)) {
+        const url = buildUrl(action.payload);
+
+        if (!url) {
+          dispatch(wsActions.wsError('Нет токена для WebSocket'));
+          return result;
+        }
+
+        if (socket && socket.readyState === WebSocket.CONNECTING) {
+          return result;
+        }
+
+        if (socket) {
+          socket.close();
+          socket = null;
         }
 
         dispatch(wsActions.wsConnecting());
 
-        if (socket) {
-          socket.close(1000, 'reconnect');
-        }
-
-        let url = urlFromAction;
-
-        if (withAuth) {
-          const raw = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('accessToken='))
-            ?.split('=')[1];
-
-          const accessToken = raw
-            ? decodeURIComponent(raw).replace('Bearer ', '')
-            : '';
-
-          url = `${urlFromAction}?token=${accessToken}`;
-        }
-
         socket = new WebSocket(url);
 
-        socket.onopen = () => dispatch(wsActions.wsOpen());
+        socket.onopen = () => {
+          dispatch(wsActions.wsOpen());
+        };
 
-        socket.onerror = () => dispatch(wsActions.wsError('WebSocket error'));
+        socket.onerror = () => {
+          dispatch(wsActions.wsError('WebSocket error'));
+        };
 
         socket.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data) as TMessage;
             dispatch(wsActions.wsMessage(data));
           } catch {
-            dispatch(wsActions.wsError('Некорректные данные WebSocket'));
+            dispatch(wsActions.wsError('Ошибка обработки WS сообщения'));
           }
         };
 
@@ -78,11 +97,16 @@ export const createWsMiddleware =
 
       if (wsActions.wsDisconnect.match(action)) {
         if (socket) {
-          socket.close(1000, 'disconnect');
+          if (socket.readyState !== WebSocket.CONNECTING) {
+            try {
+              socket.close(1000, 'disconnect');
+            } catch {}
+          }
+
           socket = null;
         }
       }
 
-      return next(action);
+      return result;
     };
   };

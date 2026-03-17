@@ -49,6 +49,8 @@ const feedWsSlice = createSlice({
 
     wsError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+
+      state.status = 'OFFLINE';
     },
     wsMessage: (state, action: PayloadAction<TFeedWsMessage>) => {
       state.error = null;

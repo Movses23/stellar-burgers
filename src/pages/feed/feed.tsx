@@ -5,7 +5,7 @@ import { FeedUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
 import { feedWsActions, fetchFeeds } from '../../services/feed-ws-slice';
 
-const WS_URL = 'wss://norma.education-services.ru/orders/all';
+const WS_URL = 'wss://norma.education-services/orders/all';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();

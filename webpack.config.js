@@ -83,16 +83,15 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './dist')
   },
- devServer: {
-  static: path.join(__dirname, './dist'),
-  compress: true,
-  historyApiFallback: true,
-  port: 4007,
-  devMiddleware: {
-    publicPath: '/'
+  devServer: {
+    static: path.join(__dirname, './dist'),
+    compress: true,
+    historyApiFallback: true,
+    port: 4555,
+    devMiddleware: {
+      publicPath: '/'
+    }
   }
-}
-
 };

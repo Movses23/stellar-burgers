@@ -19,10 +19,6 @@ export const IngredientDetails: FC = () => {
     return ingredients.find((item) => item._id === id) ?? null;
   }, [id, ingredients]);
 
-  if (!ingredients.length) {
-    return <Preloader />;
-  }
-
   if (!ingredientData) {
     return <Preloader />;
   }
