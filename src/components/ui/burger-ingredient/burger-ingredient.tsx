@@ -19,6 +19,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
       <li className={styles.container}>
         <Link
           className={styles.article}
+          data-cy={`ingredient-card-${_id}`}
           to={`/ingredients/${_id}`}
           state={locationState}
         >
@@ -38,6 +39,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
             handleAdd();
           }}
           extraClass={`${styles.addButton} mt-8`}
+          dataCy={`ingredient-add-${_id}`}
         />
       </li>
     );

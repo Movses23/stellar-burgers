@@ -6,18 +6,21 @@ type TAddButtonProps = {
   text?: string;
   htmlType?: 'button' | 'submit' | 'reset';
   extraClass?: string;
+  dataCy?: string;
 };
 
 export const AddButton: FC<TAddButtonProps> = ({
   onClick,
   text = 'Добавить',
   htmlType = 'button',
-  extraClass = ''
+  extraClass = '',
+  dataCy
 }) => (
   <button
     type={htmlType}
     className={clsx('common_button', extraClass)}
     onClick={onClick}
+    data-cy={dataCy}
   >
     <PlusIcon className='' />
     {text}
