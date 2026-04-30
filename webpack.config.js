@@ -9,14 +9,20 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /__tests__/, /\.test\.(js|jsx)$/],
         use: ['babel-loader']
       },
       {
-        test: /\.(ts)x?$/,
-        exclude: /node_modules/,
+        test: /\.(ts|tsx)$/,
+        exclude: [/node_modules/, /__tests__/, /\.test\.(ts|tsx)$/],
         use: {
-          loader: 'ts-loader'
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+      compilerOptions: {
+        noEmit: false
+      }
+          }
         }
       },
       {
@@ -49,10 +55,12 @@ module.exports = {
   },
   plugins: [
     new ESLintPlugin({
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      exclude: ['node_modules', 'src/**/__tests__/**']
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
+      publicPath: '/'
     }),
     new Dotenv()
   ],
@@ -82,13 +90,15 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, './dist')
   },
   devServer: {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    port: 4005,
+    devMiddleware: {
+      publicPath: '/'
+    }
   }
 };

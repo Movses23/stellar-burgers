@@ -12,7 +12,11 @@ type TOrderInfo = {
   ingredientsToShow: TIngredient[];
   remains: number;
   total: number;
+
   date: Date;
+
+  dateText: string;
+
   _id: string;
   status: string;
   name: string;
